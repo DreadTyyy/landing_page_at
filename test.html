@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #111a2b;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .background {
+        position: relative;
+        border-radius: 4px;
+        width: 320px;
+        height: 240px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px 0 rgba(255, 255, 255, 0.5);
+        z-index: -2;
+      }
+      .box {
+        position: absolute;
+        z-index: -1;
+        left: 6px;
+        top: 6px;
+        width: 90%;
+        height: 220px;
+        background-color: #111a2b;
+        animation: animate 8000ms linear;
+      }
+      @keyframes animate {
+        0% {
+          width: 7.5%;
+          height: 0;
+        }
+        20% {
+          width: 7.5%;
+          height: 48px;
+        }
+        40% {
+          width: 40%;
+          height: 75px;
+        }
+        60% {
+          width: 40%;
+          height: 128px;
+        }
+        80% {
+          width: 70%;
+          height: 132px;
+        }
+        100% {
+          width: 90%;
+          height: 220px;
+        }
+      }
+      @keyframes digdag {
+        0% {
+          scale: 0.9;
+        }
+        50% {
+          scale: 1.1;
+        }
+        100% {
+          scale: 0.9;
+        }
+      }
+      img {
+        height: auto;
+        width: 100%;
+        background-size: cover;
+        object-fit: cover;
+      }
+      .message {
+        position: absolute;
+        .dot {
+          width: 20px;
+          position: absolute;
+          height: 20px;
+        }
+
+        .map-bubble {
+          position: absolute;
+          width: 250px;
+        }
+        .quote {
+          position: absolute;
+          width: 250px;
+          color: bisque;
+        }
+      }
+      .message div {
+        display: none;
+      }
+      .message.active div {
+        display: block;
+      }
+      .dot.active {
+        animation: digdag 1000ms ease-in-out infinite;
+      }
+      .message-1 {
+        .dot {
+          top: 42px;
+          left: 102px;
+        }
+        .map-bubble {
+          top: -110px;
+          left: 40px;
+        }
+        .quote {
+          top: -110px;
+          left: 60px;
+        }
+      }
+      .message-2 {
+        .dot {
+          top: 96px;
+          left: 142px;
+        }
+        .map-bubble {
+          top: -60px;
+          left: 70px;
+        }
+        .quote {
+          top: -60px;
+          left: 90px;
+        }
+      }
+      .message-3 {
+        .dot {
+          top: 137px;
+          left: 224px;
+        }
+        .map-bubble {
+          top: -20px;
+          left: 10px;
+          transform: rotateY(180deg);
+        }
+        .quote {
+          top: -20px;
+          left: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <div class="message-1 message active">
+        <img class="dot active" src="assets/dot-maps.svg" alt="dot map-1" />
+        <div>
+          <img
+            class="map-bubble"
+            src="assets/map-bubble-1.svg"
+            alt="bubble map-1" />
+          <p class="quote">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
+          </p>
+        </div>
+      </div>
+      <div class="message-2 message">
+        <img class="dot" src="assets/dot-maps.svg" alt="dot map-2" />
+        <div>
+          <img
+            class="map-bubble"
+            src="assets/map-bubble-1.svg"
+            alt="bubble map-1" />
+          <p class="quote">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
+          </p>
+        </div>
+      </div>
+      <div class="message-3 message">
+        <img class="dot" src="assets/dot-maps.svg" alt="dot map-3" />
+        <div>
+          <img
+            class="map-bubble"
+            src="assets/map-bubble.svg"
+            alt="bubble map-1" />
+          <p class="quote">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
+          </p>
+        </div>
+      </div>
+      <div class="box"></div>
+      <img class="maps-box" src="assets/maps.png" alt="" />
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const activeMessageDiv = document.querySelector(".message.active div");
+        showMessage(activeMessageDiv);
+      });
+
+      gsap.to(".box", {
+        scrollTrigger: ".background",
+        x: 10,
+      });
+      let i = 0;
+      function nextMessage() {
+        const messages = document.querySelectorAll(".message");
+        const activeMessage = document.querySelectorAll(".message.active");
+        const activeDot = document.querySelector(".dot.active");
+        i = i >= 2 ? 0 : i + 1;
+
+        messages.forEach((message, index) => {
+          if (activeMessage[0] === message) {
+            message.classList.remove("active");
+            activeDot.classList.remove("active");
+          }
+          if (index === i) {
+            message.classList.add("active");
+            message.children[0].classList.add("active");
+          }
+        });
+        const activeMessageDiv = document.querySelector(".message.active div");
+        showMessage(activeMessageDiv);
+      }
+      const showMessage = (objectToAnimate) => {
+        gsap.from(objectToAnimate, {
+          opacity: 0,
+          x: -100,
+          duration: 2.5,
+          ease: "elastic",
+          onComplete: setTimeout(() => {
+            nextMessage();
+          }, 4000),
+        });
+      };
+    </script>
+  </body>
+</html>
