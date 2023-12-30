@@ -27,19 +27,19 @@ body[data-theme="light"] {
 }
 @keyframes walkingMap {
   0% {
-    width: 7.5%;
+    width: 5%;
     height: 0;
   }
   20% {
-    width: 7.5%;
-    height: 48px;
+    width: 4%;
+    height: 55px;
   }
   40% {
-    width: 40%;
-    height: 75px;
+    width: 37%;
+    height: 70px;
   }
   60% {
-    width: 40%;
+    width: 37%;
     height: 128px;
   }
   80% {
@@ -71,9 +71,11 @@ body[data-theme="light"] {
 .message {
   position: absolute;
   .dot {
+    opacity: 40%;
     width: 20px;
     position: absolute;
     height: 20px;
+    scale: 0.8;
   }
 
   .map-bubble {
@@ -139,5 +141,19 @@ body[data-theme="light"] {
   .quote {
     top: 0;
     left: 30px;
+  }
+}
+.random-message {
+  .dot:first-child {
+    top: 48px;
+    left: 210px;
+  }
+  .dot:nth-child(2) {
+    top: 187px;
+    left: 133px;
+  }
+  .dot:nth-child(3) {
+    top: 147px;
+    left: 69px;
   }
 }

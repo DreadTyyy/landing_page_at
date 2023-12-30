@@ -1,10 +1,17 @@
 // GSAP Animation
 
 window.addEventListener("DOMContentLoaded", () => {
-  const activeMessageDiv = document.querySelector(".message.active div");
-  showMessage(activeMessageDiv);
+  setTimeout(() => {
+    const activeMessage1 = document.querySelector(".message-1");
+    const dot = activeMessage1.querySelector(".dot");
+    const activeMessageDiv = activeMessage1.querySelector("div");
+    activeMessage1.classList.add("active");
+    dot.classList.add("active");
+    showMessage(activeMessageDiv);
+  }, 10000);
 });
 let i = 0;
+let epoch = 0;
 function nextMessage() {
   const messages = document.querySelectorAll(".message");
   const activeMessage = document.querySelectorAll(".message.active");
@@ -35,6 +42,50 @@ const showMessage = (objectToAnimate) => {
     }, 4000),
   });
 };
+let tl = gsap.timeline({ once: true, delay: 2.5 });
+tl.to(".dot-1", {
+  keyframes: [
+    { opacity: 0.5, scale: 1.2 },
+    {
+      opacity: 1,
+      scale: 0.5,
+      duration: 1,
+      ease: "bounce.out",
+      delay: -0.1,
+    },
+    { scale: 1, rotateY: 360, duration: 0.5, delay: 0.2 },
+  ],
+});
+tl.to(".dot-2", {
+  keyframes: [
+    { opacity: 0.5, scale: 1.2 },
+    {
+      opacity: 1,
+      scale: 0.5,
+      duration: 1,
+      ease: "bounce.out",
+      delay: -0.1,
+    },
+    { scale: 1, rotateY: 360, duration: 0.5, delay: 0.2 },
+  ],
+});
+tl.to(
+  ".dot-3",
+  {
+    keyframes: [
+      { opacity: 0.5, scale: 1.2 },
+      {
+        opacity: 1,
+        scale: 0.5,
+        duration: 1,
+        ease: "bounce.out",
+        delay: -0.1,
+      },
+      { scale: 1, rotateY: 360, duration: 0.5, delay: 0.2 },
+    ],
+  },
+  "-=0.5"
+);
 
 // AOS Animation
 const articleRealityCheck = document.querySelectorAll("#reality-check article");
